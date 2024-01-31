@@ -1,27 +1,30 @@
-const jwt = require('jsonwebtoken') //TODO : 😎
+const jwt = require('jsonwebtoken')
 
-const tokenSign = async (user) => { //TODO: Genera Token
-    return jwt.sign(
+const tokenSign = async (user) => { //Genera Token
+    const userInfo = jwt.sign(
         {
-            _id: user._id, //TODO: <---
-            role: user.role
-        }, //TODO: Payload ! Carga útil
-        process.env.JWT_SECRET, //TODO ENV 
+
+            email: user.email
+        }, //Payload ! Carga útil
+        process.env.JWT_SECRET, 
         {
-            expiresIn: "2h", //TODO tiempo de vida
+            expiresIn: "2h",
         }
     );
+    console.log(userInfo)
+    return userInfo
 }
 
 const verifyToken = async (token) => {
     try {
+        
         return jwt.verify(token, process.env.JWT_SECRET)
     } catch (e) {
         return null
     }
 }
 
-const decodeSign = (token) => { //TODO: Verificar que el token sea valido y correcto
+const decodeSign = (token) => { // Verificar que el token sea valido y correcto
     return jwt.decode(token, null)
 }
 
